@@ -23,6 +23,12 @@ async function run() {
                     cool_factor INTEGER NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );
+                CREATE TABLE dirtbikes (
+                    id SERIAL PRIMARY KEY NOT NULL,
+                    brand VARCHAR(512) NOT NULL,
+                    dirtbike BOOL NOT NULL,
+                    tires VARCHAR(512) NOT NULL
+            );
         `);
 
     console.log('create tables complete', getEmoji(), getEmoji(), getEmoji());
