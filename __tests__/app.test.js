@@ -22,37 +22,67 @@ describe('app routes', () => {
         });
       
       token = signInData.body.token; // eslint-disable-line
-    }, 10000);
+    }, 20000);
   
     afterAll(done => {
       return client.end(done);
     });
 
-    test('returns animals', async() => {
+    test('returns dirtbikes', async() => {
 
       const expectation = [
         {
-          'id': 1,
-          'name': 'bessie',
-          'cool_factor': 3,
-          'owner_id': 1
+          id: 1,
+          brand: 'kawasaki',
+          dirtbike: true,
+          tires: 'dunlop'
         },
         {
-          'id': 2,
-          'name': 'jumpy',
-          'cool_factor': 4,
-          'owner_id': 1
+          id: 2,
+          brand: 'honda',
+          dirtbike: true,
+          tires: 'pirelli'
         },
         {
-          'id': 3,
-          'name': 'spot',
-          'cool_factor': 10,
-          'owner_id': 1
+          id: 3,
+          brand: 'yamaha',
+          dirtbike: true,
+          tires: 'pirelli'
+        },
+        {
+          id: 4,
+          brand: 'suzuki',
+          dirtbike: true,
+          tires: 'dunlop'
+        },
+        {
+          id: 5,
+          brand: 'ktm',
+          dirtbike: true,
+          tires: 'dunlop'
+        },
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/dirtbikes')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+    test('returns dirtbikes', async() => {
+
+      const expectation = [
+        {
+          id: 1,
+          brand: 'kawasaki',
+          dirtbike: true,
+          tires: 'dunlop'
         }
       ];
 
       const data = await fakeRequest(app)
-        .get('/animals')
+        .get('/dirtbikes/1')
         .expect('Content-Type', /json/)
         .expect(200);
 
