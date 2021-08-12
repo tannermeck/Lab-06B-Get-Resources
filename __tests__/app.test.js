@@ -28,7 +28,7 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test.skip('returns dirtbikes', async() => {
+    test('returns dirtbikes', async() => {
 
       const expectation = [
         {
@@ -70,7 +70,7 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
-    test.skip('returns dirtbikes', async() => {
+    test('returns dirtbikes with a specific id', async() => {
 
       const expectation = [
         {
@@ -88,11 +88,10 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
-    test.skip('creates a dirtbike', async() => {
+    test('creates a dirtbike', async() => {
 
       const newDirtbike = 
         {
-          id: 6,
           brand: 'husquvarna',
           dirtbike: true,
           tires: 'pirelli'
@@ -110,19 +109,23 @@ describe('app routes', () => {
 
       const updateDirtbike = 
         {
-          id: 5,
           brand: 'alta',
-          dirtbike: false,
+          dirtbike: true,
           tires: 'pirelli'
         };
-
+      
+      
+      await fakeRequest(app)
+        .put('/dirtbikes/2').send(updateDirtbike)
+        .expect(200)
+        .expect('Content-Type', /json/);
       const data = await fakeRequest(app)
-        .put('/dirtbikes/1').send(updateDirtbike)
+        .get('/dirtbikes/2')
         .expect(200)
         .expect('Content-Type', /json/);
 
       expect(data.body.brand).toEqual(updateDirtbike.brand);
-      expect(data.body.tires).toEqual(updateDirtbike.dirtbike);
+      expect(data.body.dirtbike).toEqual(updateDirtbike.dirtbike);
     });
   });
 });
