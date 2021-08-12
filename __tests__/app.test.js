@@ -70,7 +70,7 @@ describe('app routes', () => {
 
       expect(data.body).toEqual(expectation);
     });
-    test('returns dirtbikes', async() => {
+    test('returns dirtbikes with a specific id', async() => {
 
       const expectation = [
         {
@@ -87,6 +87,45 @@ describe('app routes', () => {
         .expect(200);
 
       expect(data.body).toEqual(expectation);
+    });
+    test('creates a dirtbike', async() => {
+
+      const newDirtbike = 
+        {
+          brand: 'husquvarna',
+          dirtbike: true,
+          tires: 'pirelli'
+        };
+
+      const data = await fakeRequest(app)
+        .post('/dirtbikes').send(newDirtbike)
+        .expect(200)
+        .expect('Content-Type', /json/);
+
+      expect(data.body.brand).toEqual(newDirtbike.brand);
+      expect(data.body.tires).toEqual(newDirtbike.tires);
+    });
+    test('replaces a dirtbike object information', async() => {
+
+      const updateDirtbike = 
+        {
+          brand: 'alta',
+          dirtbike: true,
+          tires: 'pirelli'
+        };
+      
+      
+      await fakeRequest(app)
+        .put('/dirtbikes/2').send(updateDirtbike)
+        .expect(200)
+        .expect('Content-Type', /json/);
+      const data = await fakeRequest(app)
+        .get('/dirtbikes/2')
+        .expect(200)
+        .expect('Content-Type', /json/);
+
+      expect(data.body[0].brand).toEqual(updateDirtbike.brand);
+      expect(data.body[0].dirtbike).toEqual(updateDirtbike.dirtbike);
     });
   });
 });
