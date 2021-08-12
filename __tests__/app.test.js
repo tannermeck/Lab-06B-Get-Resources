@@ -124,8 +124,8 @@ describe('app routes', () => {
         .expect(200)
         .expect('Content-Type', /json/);
 
-      expect(data.body.brand).toEqual(updateDirtbike.brand);
-      expect(data.body.dirtbike).toEqual(updateDirtbike.dirtbike);
+      expect(data.body[0].brand).toEqual(updateDirtbike.brand);
+      expect(data.body[0].dirtbike).toEqual(updateDirtbike.dirtbike);
     });
   });
 });
