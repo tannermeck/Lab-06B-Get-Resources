@@ -5,6 +5,7 @@ const { execSync } = require('child_process');
 const fakeRequest = require('supertest');
 const app = require('../lib/app');
 const client = require('../lib/client');
+const dirtbikes = require('../data/dirtbikes.js');
 
 describe('app routes', () => {
   describe('routes', () => {
@@ -29,46 +30,24 @@ describe('app routes', () => {
     });
 
     test('returns dirtbikes', async() => {
-
-      const expectation = [
+      const expectedBrands = dirtbikes.map(bike => bike.brand);
+      const expectation = 
         {
           id: 1,
           brand: 'kawasaki',
           dirtbike: true,
-          tire_id: 1
-        },
-        {
-          id: 2,
-          brand: 'honda',
-          dirtbike: true,
-          tire_id: 2
-        },
-        {
-          id: 3,
-          brand: 'yamaha',
-          dirtbike: true,
-          tire_id: 2
-        },
-        {
-          id: 4,
-          brand: 'suzuki',
-          dirtbike: true,
-          tire_id: 1
-        },
-        {
-          id: 5,
-          brand: 'ktm',
-          dirtbike: true,
-          tire_id: 1
-        },
-      ];
+          tirebrand: 'dunlop'
+        };
+      
 
       const data = await fakeRequest(app)
         .get('/dirtbikes')
         .expect('Content-Type', /json/)
         .expect(200);
+      const brands = data.body.map(item => item.brand);
 
-      expect(data.body).toEqual(expectation);
+      expect(brands).toEqual(expectedBrands);
+      expect(data.body[0]).toEqual(expectation);
     });
     test('returns dirtbikes with a specific id', async() => {
 
@@ -77,15 +56,16 @@ describe('app routes', () => {
           id: 1,
           brand: 'kawasaki',
           dirtbike: true,
-          tire_id: 1
+          tirebrand: 'dunlop'
         }
       ];
 
       const data = await fakeRequest(app)
         .get('/dirtbikes/1')
-        .expect('Content-Type', /json/)
-        .expect(200);
+        .expect(200)
+        .expect('Content-Type', /json/);
 
+      console.log(data.body);
       expect(data.body).toEqual(expectation);
     });
     test('creates a dirtbike', async() => {
