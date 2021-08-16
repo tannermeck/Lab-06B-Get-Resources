@@ -35,31 +35,31 @@ describe('app routes', () => {
           id: 1,
           brand: 'kawasaki',
           dirtbike: true,
-          tires: 'dunlop'
+          tire_id: 1
         },
         {
           id: 2,
           brand: 'honda',
           dirtbike: true,
-          tires: 'pirelli'
+          tire_id: 2
         },
         {
           id: 3,
           brand: 'yamaha',
           dirtbike: true,
-          tires: 'pirelli'
+          tire_id: 2
         },
         {
           id: 4,
           brand: 'suzuki',
           dirtbike: true,
-          tires: 'dunlop'
+          tire_id: 1
         },
         {
           id: 5,
           brand: 'ktm',
           dirtbike: true,
-          tires: 'dunlop'
+          tire_id: 1
         },
       ];
 
@@ -77,7 +77,7 @@ describe('app routes', () => {
           id: 1,
           brand: 'kawasaki',
           dirtbike: true,
-          tires: 'dunlop'
+          tire_id: 1
         }
       ];
 
@@ -94,7 +94,7 @@ describe('app routes', () => {
         {
           brand: 'husquvarna',
           dirtbike: true,
-          tires: 'pirelli'
+          tire_id: 2
         };
 
       const data = await fakeRequest(app)
@@ -111,7 +111,7 @@ describe('app routes', () => {
         {
           brand: 'alta',
           dirtbike: false,
-          tires: 'pirelli'
+          tire_id: 2
         };
       
       

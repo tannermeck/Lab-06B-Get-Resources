@@ -22,23 +22,25 @@ async function run() {
         [user.email, user.hash]);
       })
     );
-  
-    await Promise.all(
-      dirtbikes.map(bike => {
-        return client.query(`
-                    INSERT INTO dirtbikes (brand, dirtbike, tires)
-                    VALUES ($1, $2, $3);
-                `,
-        [bike.brand, bike.dirtbike, bike.tires]);
-      })
-    );
+    
     await Promise.all(
       tires.map(tire => {
         return client.query(`
                     INSERT INTO tires (brand)
-                    VALUES ($1);
+                    VALUES ($1)
+                    RETURNING *;
                 `,
         [tire.brand]);
+      })
+    );
+    await Promise.all(
+      dirtbikes.map(bike => {
+        return client.query(`
+                    INSERT INTO dirtbikes (brand, dirtbike, tire_id)
+                    VALUES ($1, $2, $3)
+                    RETURNING *;
+                `,
+        [bike.brand, bike.dirtbike, bike.tire_id]);
       })
     );
     

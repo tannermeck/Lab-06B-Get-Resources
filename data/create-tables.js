@@ -25,7 +25,7 @@ async function run() {
                     id SERIAL PRIMARY KEY NOT NULL,
                     brand VARCHAR(512) NOT NULL,
                     dirtbike BOOL NOT NULL,
-                    tires VARCHAR(512) NOT NULL
+                    tire_id INTEGER NOT NULL REFERENCES tires(id)
             );
         `);
 
