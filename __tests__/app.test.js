@@ -65,7 +65,6 @@ describe('app routes', () => {
         .expect(200)
         .expect('Content-Type', /json/);
 
-      console.log(data.body);
       expect(data.body).toEqual(expectation);
     });
     test('creates a dirtbike', async() => {
