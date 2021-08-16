@@ -110,7 +110,7 @@ describe('app routes', () => {
       const updateDirtbike = 
         {
           brand: 'alta',
-          dirtbike: true,
+          dirtbike: false,
           tires: 'pirelli'
         };
       
