@@ -16,12 +16,16 @@ async function run() {
                     id SERIAL PRIMARY KEY,
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
-                );           
+                );        
+                CREATE TABLE tires (
+                    id SERIAL PRIMARY KEY,
+                    brand VARCHAR(512) NOT NULL
+                );   
                 CREATE TABLE dirtbikes (
                     id SERIAL PRIMARY KEY NOT NULL,
                     brand VARCHAR(512) NOT NULL,
                     dirtbike BOOL NOT NULL,
-                    tires VARCHAR(512) NOT NULL
+                    tire_id INTEGER NOT NULL REFERENCES tires(id)
             );
         `);
 

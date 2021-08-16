@@ -5,6 +5,7 @@ const { execSync } = require('child_process');
 const fakeRequest = require('supertest');
 const app = require('../lib/app');
 const client = require('../lib/client');
+const dirtbikes = require('../data/dirtbikes.js');
 
 describe('app routes', () => {
   describe('routes', () => {
@@ -29,46 +30,24 @@ describe('app routes', () => {
     });
 
     test('returns dirtbikes', async() => {
-
-      const expectation = [
+      const expectedBrands = dirtbikes.map(bike => bike.brand);
+      const expectation = 
         {
           id: 1,
           brand: 'kawasaki',
           dirtbike: true,
-          tires: 'dunlop'
-        },
-        {
-          id: 2,
-          brand: 'honda',
-          dirtbike: true,
-          tires: 'pirelli'
-        },
-        {
-          id: 3,
-          brand: 'yamaha',
-          dirtbike: true,
-          tires: 'pirelli'
-        },
-        {
-          id: 4,
-          brand: 'suzuki',
-          dirtbike: true,
-          tires: 'dunlop'
-        },
-        {
-          id: 5,
-          brand: 'ktm',
-          dirtbike: true,
-          tires: 'dunlop'
-        },
-      ];
+          tirebrand: 'dunlop'
+        };
+      
 
       const data = await fakeRequest(app)
         .get('/dirtbikes')
         .expect('Content-Type', /json/)
         .expect(200);
+      const brands = data.body.map(item => item.brand);
 
-      expect(data.body).toEqual(expectation);
+      expect(brands).toEqual(expectedBrands);
+      expect(data.body[0]).toEqual(expectation);
     });
     test('returns dirtbikes with a specific id', async() => {
 
@@ -77,14 +56,14 @@ describe('app routes', () => {
           id: 1,
           brand: 'kawasaki',
           dirtbike: true,
-          tires: 'dunlop'
+          tirebrand: 'dunlop'
         }
       ];
 
       const data = await fakeRequest(app)
         .get('/dirtbikes/1')
-        .expect('Content-Type', /json/)
-        .expect(200);
+        .expect(200)
+        .expect('Content-Type', /json/);
 
       expect(data.body).toEqual(expectation);
     });
@@ -94,7 +73,7 @@ describe('app routes', () => {
         {
           brand: 'husquvarna',
           dirtbike: true,
-          tires: 'pirelli'
+          tire_id: 2
         };
 
       const data = await fakeRequest(app)
@@ -111,7 +90,7 @@ describe('app routes', () => {
         {
           brand: 'alta',
           dirtbike: false,
-          tires: 'pirelli'
+          tire_id: 2
         };
       
       
