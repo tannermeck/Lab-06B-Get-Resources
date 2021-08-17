@@ -51,14 +51,13 @@ describe('app routes', () => {
     });
     test('returns dirtbikes with a specific id', async() => {
 
-      const expectation = [
+      const expectation = 
         {
           id: 1,
           brand: 'kawasaki',
           dirtbike: true,
           tirebrand: 'dunlop'
-        }
-      ];
+        };
 
       const data = await fakeRequest(app)
         .get('/dirtbikes/1')
@@ -103,8 +102,8 @@ describe('app routes', () => {
         .expect(200)
         .expect('Content-Type', /json/);
 
-      expect(data.body[0].brand).toEqual(updateDirtbike.brand);
-      expect(data.body[0].dirtbike).toEqual(updateDirtbike.dirtbike);
+      expect(data.body.brand).toEqual(updateDirtbike.brand);
+      expect(data.body.dirtbike).toEqual(updateDirtbike.dirtbike);
     });
   });
 });
